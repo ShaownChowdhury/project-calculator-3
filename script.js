@@ -50,7 +50,33 @@ const selectOperator = (operatorValue) => {
 
 // Function to calculate result
 const calculateResult = () => {
+   let evaluatedResult;
+   const prev = previousOperand;
+   const current = result;
 
+   if(NaN(prev) || NaN(current)) return;
+
+   switch (operation) {
+    case '+':
+        evaluatedResult = prev + current;
+        break;
+    case '-':
+        evaluatedResult = prev - current;
+        break;
+    case '*':
+        evaluatedResult = prev * current;
+        break;
+    case '/':
+        evaluatedResult = prev / current;
+        break;
+   
+    default:
+        return;
+   }
+
+   result = evaluatedResult.toString();
+   operation = '';
+   previousOperand = '';
 }
 
 // Add event listener to number buttons
