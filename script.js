@@ -51,10 +51,10 @@ const selectOperator = (operatorValue) => {
 // Function to calculate result
 const calculateResult = () => {
    let evaluatedResult;
-   const prev = previousOperand;
-   const current = result;
+   const prev = parseFloat(previousOperand);
+   const current = parseFloat(result);
 
-   if(NaN(prev) || NaN(current)) return;
+   if(isNaN(prev) || isNaN(current)) return;
 
    switch (operation) {
     case '+':
@@ -87,9 +87,31 @@ numberBtns.forEach(button => {
     })
 });
 
-decimalBtn.addEventListener('click',() => appendNumber('.'));
-addBtn.addEventListener('click',() => appendNumber('+'));
-subtractionBtn.addEventListener('click',() => appendNumber('-'));
-multiplyBtn.addEventListener('click',() => appendNumber('*'));
-devideBtn.addEventListener('click',() => appendNumber('/'));
+// Function to clear display
+const clearDisplay = () =>{
+    result = '';
+    previousOperand = '';
+    operation = '';
+    updateDisplay();
+}
 
+// function to delete last character
+const deleteLastDigit = () =>{
+    if(result === '') return;
+    result = result.toString().slice(0, -1);
+    updateDisplay();
+}
+
+decimalBtn.addEventListener('click',() => appendNumber('.'));
+addBtn.addEventListener('click',() => selectOperator('+'));
+subtractionBtn.addEventListener('click',() => selectOperator('-'));
+multiplyBtn.addEventListener('click',() => selectOperator('*'));
+devideBtn.addEventListener('click',() => selectOperator('/'));
+equalBtn.addEventListener('click',() => {
+    if( result === '') return;
+    calculateResult();
+    updateDisplay();
+});
+
+clearBtn.addEventListener('click',clearDisplay);
+deleteBtn.addEventListener('click', deleteLastDigit);
